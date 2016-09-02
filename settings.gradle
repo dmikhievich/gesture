@@ -1,0 +1,6 @@
+rootProject.name = 'gesture'
+//include 'gesture-core'
+//include 'gesture-test-data'
+//include 'gesture-configuration'
+include 'gesture-retry'
+
