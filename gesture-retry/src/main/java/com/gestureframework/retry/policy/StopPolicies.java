@@ -41,7 +41,7 @@ public final class StopPolicies {
 
         @Override
         public boolean shouldStopExecution(RetryContext context) {
-            return context.getRetryCount() >= attempt;
+            return context.getRetriesCount() >= attempt;
         }
     }
 }
