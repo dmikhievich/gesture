@@ -4,6 +4,8 @@ import com.gestureframework.retry.AttemptResult;
 
 import javax.annotation.Nullable;
 
+import static java.lang.String.format;
+
 /**
  * @author Dzmitry Mikhievich
  */
@@ -21,7 +23,7 @@ public final class AttemptResultConditions {
 
             @Override
             public String getDescription() {
-                return String.format("exception (%s)", exceptionCondition.getDescription());
+                return format("exception (%s)", exceptionCondition.getDescription());
             }
         };
     }
@@ -36,7 +38,7 @@ public final class AttemptResultConditions {
 
             @Override
             public String getDescription() {
-                return String.format("result (%s)", resultCondition.getDescription());
+                return format("result (%s)", resultCondition.getDescription());
             }
         };
     }

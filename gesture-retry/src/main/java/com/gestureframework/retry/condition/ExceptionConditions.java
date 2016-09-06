@@ -3,7 +3,7 @@ package com.gestureframework.retry.condition;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import static com.gestureframework.retry.condition.Conditions.not;
+import static com.gestureframework.retry.condition.Condition.not;
 
 /**
  * @author Dzmitry Mikhievich
@@ -59,7 +59,7 @@ public final class ExceptionConditions {
 
         @Override
         public boolean matches(@Nullable Exception value) {
-            return value == null;
+            return value != null;
         }
 
         @Override

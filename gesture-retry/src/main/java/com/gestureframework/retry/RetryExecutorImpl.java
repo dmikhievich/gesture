@@ -3,6 +3,7 @@ package com.gestureframework.retry;
 import com.gestureframework.retry.condition.Condition;
 import com.gestureframework.retry.policy.StopPolicy;
 import com.gestureframework.retry.policy.WaitPolicy;
+import com.google.common.util.concurrent.Uninterruptibles;
 
 import java.util.concurrent.Callable;
 
@@ -22,19 +23,23 @@ public class RetryExecutorImpl implements RetryExecutor {
     @Override
     public <T> T doWithRetry(Callable<T> action, Condition<AttemptResult<T>> acceptanceCriteria) throws RetryExecutionException {
         RetryContext context = RetryContext.create();
-        boolean shouldStop = false;
-        while(!shouldStop) {
+        boolean forceStop = false;
+        while(!forceStop) {
             AttemptResult<T> attemptResult = makeAnAttempt(action);
+            //check if acceptance criteria met
+            if(acceptanceCriteria.matches(attemptResult)) {
+                return attemptResult.getResult();
+            }
             //update context
             context.incrementRetriesCount();
             context.setLatestAttemptResult(attemptResult);
             if(stopPolicy.shouldStopExecution(context)) {
-                shouldStop = true;
+                forceStop = true;
             }
             Duration waitDuration = waitPolicy.getDelayBeforeNextAttempt(context);
-
+            Uninterruptibles.sleepUninterruptibly(waitDuration.getValue(), waitDuration.getTimeUnit());
         }
-        return null;
+        throw new RetryExecutionException("");
     }
 
     private <T> AttemptResult<T> makeAnAttempt(Callable<T> action) {

@@ -3,10 +3,10 @@ package com.gestureframework.retry.policy;
 import com.gestureframework.retry.Duration;
 import com.gestureframework.retry.RetryContext;
 import com.google.common.collect.Range;
+import org.apache.commons.lang3.RandomUtils;
 
 import java.util.concurrent.TimeUnit;
 
-//TODO add implementations
 /**
  * Created by Dzmitry_Mikhievich.
  */
@@ -46,7 +46,8 @@ public class WaitPolicies {
 
         @Override
         public Duration getDelayBeforeNextAttempt(RetryContext context) {
-            return null;
+            long duration = RandomUtils.nextLong(value.lowerEndpoint(), value.upperEndpoint() + 1);
+            return Duration.in(duration, timeUnit);
         }
     }
 }

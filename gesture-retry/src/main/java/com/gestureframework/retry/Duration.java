@@ -1,5 +1,6 @@
 package com.gestureframework.retry;
 
+import lombok.Getter;
 import lombok.ToString;
 
 import java.util.Objects;
@@ -11,7 +12,9 @@ import java.util.concurrent.TimeUnit;
 @ToString
 public class Duration {
 
+    @Getter
     private final TimeUnit timeUnit;
+    @Getter
     private final long value;
 
     private Duration(long value, TimeUnit timeUnit) {

@@ -40,4 +40,18 @@ public interface Condition<T>  {
             }
         };
     }
+    //TODO find more appropriate class
+    static <T> Condition<T> not(Condition<T> condition) {
+        return new Condition<T>() {
+            @Override
+            public boolean matches(@Nullable T value) {
+                return !condition.matches(value);
+            }
+
+            @Override
+            public String getDescription() {
+                return String.format("not (%s)", condition.getDescription());
+            }
+        };
+    }
 }
