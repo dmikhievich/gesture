@@ -5,6 +5,8 @@ version '0.0.1-SNAPSHOT'
 subprojects {
 
     apply plugin: 'java'
+    apply plugin: 'jacoco'
+
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
@@ -17,6 +19,12 @@ subprojects {
         compile 'com.google.guava:guava:19.0'
 
         testCompile 'junit:junit:4.11'
+    }
+
+    jacocoTestReport {
+        reports {
+            xml.enabled true
+        }
     }
 }
 
