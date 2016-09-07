@@ -4,6 +4,7 @@ import com.gestureframework.retry.AttemptResult;
 
 import javax.annotation.Nullable;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static java.lang.String.format;
 
 /**
@@ -11,14 +12,17 @@ import static java.lang.String.format;
  */
 public final class AttemptResultConditions {
 
-    private AttemptResultConditions() {}
+    private AttemptResultConditions() {
+    }
 
-    public static <T> Condition<AttemptResult<T>> exception(@Nullable Condition<Exception> exceptionCondition) {
+    public static <T> Condition<AttemptResult<T>> exception(Condition<Exception> exceptionCondition) {
+        checkArgument(exceptionCondition != null, "Condition can't be null");
         return new Condition<AttemptResult<T>>() {
 
             @Override
             public boolean matches(@Nullable AttemptResult<T> value) {
-                return exceptionCondition.matches(value.getThrownException());
+                Exception resultException = value != null ? value.getThrownException() : null;
+                return exceptionCondition.matches(resultException);
             }
 
             @Override
@@ -29,6 +33,7 @@ public final class AttemptResultConditions {
     }
 
     public static <T> Condition<AttemptResult<T>> result(Condition<T> resultCondition) {
+        checkArgument(resultCondition != null, "Condition can't be null");
         return new Condition<AttemptResult<T>>() {
 
             @Override

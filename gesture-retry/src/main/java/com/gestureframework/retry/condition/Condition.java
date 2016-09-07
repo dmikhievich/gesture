@@ -2,21 +2,24 @@ package com.gestureframework.retry.condition;
 
 import javax.annotation.Nullable;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 /**
  * Created by Dzmitry_Mikhievich.
  */
-public interface Condition<T>  {
+public interface Condition<T> {
 
     boolean matches(@Nullable T value);
 
     String getDescription();
 
-    default Condition<T> and(@Nullable Condition<T> other) {
+    default Condition<T> and(Condition<T> other) {
+        checkArgument(other != null, "Linkable condition can't be null");
         String description = String.format("(%s and %s)", getDescription(), other.getDescription());
         return new Condition<T>() {
             @Override
             public boolean matches(@Nullable T value) {
-                return matches(value) && other.matches(value);
+                return Condition.this.matches(value) && other.matches(value);
             }
 
             @Override
@@ -27,11 +30,12 @@ public interface Condition<T>  {
     }
 
     default Condition<T> or(Condition<T> other) {
+        checkArgument(other != null, "Linkable condition can't be null");
         String description = String.format("(%s or %s)", getDescription(), other.getDescription());
         return new Condition<T>() {
             @Override
             public boolean matches(@Nullable T value) {
-                return matches(value) || other.matches(value);
+                return Condition.this.matches(value) || other.matches(value);
             }
 
             @Override
@@ -40,8 +44,10 @@ public interface Condition<T>  {
             }
         };
     }
+
     //TODO find more appropriate class
     static <T> Condition<T> not(Condition<T> condition) {
+        checkArgument(condition != null, "Linkable condition can't be null");
         return new Condition<T>() {
             @Override
             public boolean matches(@Nullable T value) {

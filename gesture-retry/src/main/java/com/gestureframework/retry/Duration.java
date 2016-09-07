@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
  * Created by Dzmitry_Mikhievich.
  */
 @ToString
+//TODO optimize to avoid extra-conversions
 public class Duration {
 
     @Getter
