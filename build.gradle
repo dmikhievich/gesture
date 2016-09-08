@@ -28,6 +28,11 @@ subprojects {
             xml.enabled true
         }
     }
+
+    tasks.withType(Test) {
+        maxParallelForks = 4
+    }
+
     check.dependsOn jacocoTestReport
 }
 

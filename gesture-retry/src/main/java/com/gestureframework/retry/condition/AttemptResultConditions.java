@@ -27,7 +27,7 @@ public final class AttemptResultConditions {
 
             @Override
             public String getDescription() {
-                return format("exception (%s)", exceptionCondition.getDescription());
+                return format("exception is (%s)", exceptionCondition.getDescription());
             }
         };
     }
@@ -38,12 +38,13 @@ public final class AttemptResultConditions {
 
             @Override
             public boolean matches(@Nullable AttemptResult<T> value) {
-                return resultCondition.matches(value.getResult());
+                T result = value != null ? value.getResult() : null;
+                return resultCondition.matches(result);
             }
 
             @Override
             public String getDescription() {
-                return format("result (%s)", resultCondition.getDescription());
+                return format("result is (%s)", resultCondition.getDescription());
             }
         };
     }

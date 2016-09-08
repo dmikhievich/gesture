@@ -18,8 +18,8 @@ import static org.mockito.Mockito.when;
 @RunWith(JUnitParamsRunner.class)
 public class ConditionTest {
 
-    private Condition<Object> testCondition = (Condition<Object>) mock(Condition.class);
-    private Object argMock = mock(Object.class);
+    private final Condition<Object> testCondition = (Condition<Object>) mock(Condition.class);
+    private final Object argMock = mock(Object.class);
 
     @Before
     public void setupMocks() {
@@ -58,9 +58,9 @@ public class ConditionTest {
 
     @Test
     @Parameters({"true, true",
-                 "false, true",
-                 "true, false",
-                 "false, false"})
+            "false, true",
+            "true, false",
+            "false, false"})
     public void testOr_whenCalledWithValidCondition_thenCorrectAggregatedConditionShouldBeReturned(boolean baseCondResult, boolean otherCondResult) {
         when(testCondition.matches(argMock)).thenReturn(baseCondResult);
         Condition<Object> otherCondition = (Condition<Object>) mock(Condition.class);
@@ -72,7 +72,7 @@ public class ConditionTest {
     }
 
     @Test
-    @Parameters({"true", "false" })
+    @Parameters({"true", "false"})
     public void testNot_whenCalledWithNonNullCondition__thenCorrectAggregatedConditionShouldBeReturned(boolean result) {
         when(testCondition.matches(argMock)).thenReturn(result);
 
