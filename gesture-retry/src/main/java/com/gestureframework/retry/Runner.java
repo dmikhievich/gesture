@@ -22,11 +22,6 @@ public class Runner {
 
     public static void main(String[] args) {
 
-        RetryExecutor retryExecutor = new RetryExecutorBuilder()
-                .withWaitPolicy(fixed(in(1, SECONDS)))
-                .withStopPolicy(stopOnAttempt(3))
-                .build();
-
         Callable<Integer> action = () -> {
             count += 1;
             if (count < 2) {
@@ -35,7 +30,6 @@ public class Runner {
                 return count;
             }
         };
-
         Condition<Integer> isMoreThan2 = new Condition<Integer>() {
 
             @Override
@@ -48,6 +42,11 @@ public class Runner {
                 return "more than 2";
             }
         };
+
+        RetryExecutor retryExecutor = new RetryExecutorBuilder()
+                .withWaitPolicy(fixed(in(1, SECONDS)))
+                .withStopPolicy(stopOnAttempt(3))
+                .build();
 
         retryExecutor.doWithRetry(action, result(isMoreThan2).and(exception(isNotThrown())));
     }

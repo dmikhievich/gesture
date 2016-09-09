@@ -5,6 +5,7 @@ import com.gestureframework.retry.RetryContext;
 import com.google.common.collect.Range;
 import org.apache.commons.lang3.RandomUtils;
 
+import javax.annotation.Nonnull;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -24,11 +25,11 @@ public class WaitPolicies {
 
         private final Duration duration;
 
-        public FixedWaitPolicy(Duration duration) {
+        FixedWaitPolicy(Duration duration) {
             this.duration = duration;
         }
 
-        @Override
+        @Nonnull @Override
         public Duration getDelayBeforeNextAttempt(RetryContext context) {
             return duration;
         }
@@ -39,12 +40,12 @@ public class WaitPolicies {
         private final TimeUnit timeUnit;
         private final Range<Long> value;
 
-        public RandomWaitPolicy(TimeUnit timeUnit, Range<Long> value) {
+        RandomWaitPolicy(TimeUnit timeUnit, Range<Long> value) {
             this.timeUnit = timeUnit;
             this.value = value;
         }
 
-        @Override
+        @Nonnull @Override
         public Duration getDelayBeforeNextAttempt(RetryContext context) {
             long duration = RandomUtils.nextLong(value.lowerEndpoint(), value.upperEndpoint() + 1);
             return Duration.in(duration, timeUnit);

@@ -3,29 +3,35 @@ package com.gestureframework.retry.policy;
 import com.gestureframework.retry.Duration;
 import com.gestureframework.retry.RetryContext;
 
+import javax.annotation.Nonnull;
+
+import static com.google.common.base.Preconditions.checkArgument;
+
 /**
  * Created by Dzmitry_Mikhievich.
  */
 public final class StopPolicies {
 
     public static StopPolicy stopOnTimeout(Duration timeout) {
+        checkArgument(timeout != null, "Timeout can't be null");
         return new StopOnTimeoutPolicy(timeout);
     }
 
-    public static StopPolicy stopOnAttempt(int maxAttempt) {
-        return new StopOnAttemptPolicy(maxAttempt);
+    public static StopPolicy stopOnAttempt(int attemptNumber) {
+        checkArgument(attemptNumber > 0, "Attempt number should be more than 1");
+        return new StopOnAttemptPolicy(attemptNumber);
     }
 
     private static class StopOnTimeoutPolicy implements StopPolicy {
 
         private final Duration timeout;
 
-        StopOnTimeoutPolicy(Duration timeout) {
+        StopOnTimeoutPolicy(@Nonnull Duration timeout) {
             this.timeout = timeout;
         }
 
         @Override
-        public boolean shouldStopExecution(RetryContext context) {
+        public boolean shouldStopExecution(@Nonnull RetryContext context) {
             Duration executionDuration = context.getExecutionDuration();
             return executionDuration.isMoreOrEquals(timeout);
         }
@@ -40,7 +46,7 @@ public final class StopPolicies {
         }
 
         @Override
-        public boolean shouldStopExecution(RetryContext context) {
+        public boolean shouldStopExecution(@Nonnull RetryContext context) {
             return context.getRetriesCount() >= attempt;
         }
     }
