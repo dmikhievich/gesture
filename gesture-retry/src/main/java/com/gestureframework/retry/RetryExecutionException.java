@@ -3,9 +3,9 @@ package com.gestureframework.retry;
 /**
  * Created by Dzmitry_Mikhievich.
  */
-public class RetryExecutionException extends RuntimeException {
+class RetryExecutionException extends RuntimeException {
 
-    public RetryExecutionException(String message) {
+    RetryExecutionException(String message) {
         super(message);
     }
 }

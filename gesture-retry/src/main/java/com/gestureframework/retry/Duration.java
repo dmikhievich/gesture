@@ -3,14 +3,16 @@ package com.gestureframework.retry;
 import lombok.Getter;
 import lombok.ToString;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * Created by Dzmitry_Mikhievich.
  */
 @ToString
-//TODO optimize to avoid extra-conversions
 public class Duration {
 
     @Getter
@@ -18,27 +20,29 @@ public class Duration {
     @Getter
     private final long value;
 
+    //local value, which uses for optimization of toNanos() method
+    private Long valueInNanos;
+
     private Duration(long value, TimeUnit timeUnit) {
-        //TODO add validation
         this.value = value;
         this.timeUnit = timeUnit;
     }
 
-    public long toMillis() {
-        return timeUnit.toMillis(value);
-    }
-
-    public long toNanos() {
-        return timeUnit.toNanos(value);
-    }
-
-    //TODO add validation
-    public boolean isMoreOrEquals(Duration other) {
+    public boolean isMoreOrEquals(@Nonnull Duration other) {
         return toNanos() >= other.toNanos();
     }
 
     public static Duration in(long value, TimeUnit timeUnit) {
+        checkArgument(value > 0, "Duration value should be more than 0");
+        checkArgument(timeUnit != null, "Time unit should be specified");
         return new Duration(value, timeUnit);
+    }
+
+    private long toNanos() {
+        if (valueInNanos == null) {
+            valueInNanos = timeUnit.toNanos(value);
+        }
+        return valueInNanos;
     }
 
     @Override
@@ -55,6 +59,6 @@ public class Duration {
 
     @Override
     public int hashCode() {
-        return Objects.hash(timeUnit, value);
+        return Objects.hash(toNanos());
     }
 }

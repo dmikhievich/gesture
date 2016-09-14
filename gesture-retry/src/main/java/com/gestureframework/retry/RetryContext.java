@@ -1,10 +1,7 @@
 package com.gestureframework.retry;
 
 import com.google.common.base.Stopwatch;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.concurrent.TimeUnit;
 
@@ -16,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 public class RetryContext {
 
     @Getter
-    @Setter
+    @Setter(AccessLevel.PACKAGE)
     private AttemptResult latestAttemptResult;
     @Getter
     private int retriesCount = 0;
@@ -27,16 +24,16 @@ public class RetryContext {
         this.stopwatch = Stopwatch.createStarted();
     }
 
-    public void incrementRetriesCount() {
-        retriesCount += 1;
-    }
-
     public Duration getExecutionDuration() {
         TimeUnit timeUnit = TimeUnit.NANOSECONDS;
         return Duration.in(stopwatch.elapsed(timeUnit), timeUnit);
     }
 
-    public static RetryContext create() {
+    void incrementRetriesCount() {
+        retriesCount += 1;
+    }
+
+    static RetryContext create() {
         return new RetryContext();
     }
 }
