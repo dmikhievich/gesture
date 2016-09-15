@@ -1,4 +1,4 @@
-package com.gestureframework.retry.condition;
+package com.github.dmikhievich.gesture.condition;
 
 import javax.annotation.Nullable;
 

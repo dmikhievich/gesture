@@ -1,9 +1,9 @@
-package com.gestureframework.retry.condition;
+package com.github.dmikhievich.gesture.condition;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import static com.gestureframework.retry.condition.Condition.not;
+import static com.github.dmikhievich.gesture.condition.Condition.not;
 import static com.google.common.base.Preconditions.checkArgument;
 
 /**

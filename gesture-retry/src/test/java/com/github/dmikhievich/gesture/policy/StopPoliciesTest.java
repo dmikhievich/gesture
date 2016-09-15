@@ -1,7 +1,7 @@
-package com.gestureframework.retry.policy;
+package com.github.dmikhievich.gesture.policy;
 
-import com.gestureframework.retry.Duration;
-import com.gestureframework.retry.RetryContext;
+import com.github.dmikhievich.gesture.Duration;
+import com.github.dmikhievich.gesture.RetryContext;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;

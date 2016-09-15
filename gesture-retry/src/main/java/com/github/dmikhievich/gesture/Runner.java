@@ -1,16 +1,15 @@
-package com.gestureframework.retry;
+package com.github.dmikhievich.gesture;
 
-import com.gestureframework.retry.condition.Condition;
+import com.github.dmikhievich.gesture.condition.Condition;
 
 import javax.annotation.Nullable;
 import java.util.concurrent.Callable;
 
-import static com.gestureframework.retry.Duration.in;
-import static com.gestureframework.retry.condition.AttemptResultConditions.exception;
-import static com.gestureframework.retry.condition.AttemptResultConditions.result;
-import static com.gestureframework.retry.condition.ExceptionConditions.isNotThrown;
-import static com.gestureframework.retry.policy.StopPolicies.stopOnAttempt;
-import static com.gestureframework.retry.policy.WaitPolicies.fixed;
+import static com.github.dmikhievich.gesture.condition.AttemptResultConditions.exception;
+import static com.github.dmikhievich.gesture.condition.AttemptResultConditions.result;
+import static com.github.dmikhievich.gesture.condition.ExceptionConditions.isNotThrown;
+import static com.github.dmikhievich.gesture.policy.StopPolicies.stopOnAttempt;
+import static com.github.dmikhievich.gesture.policy.WaitPolicies.fixed;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
@@ -44,7 +43,7 @@ public class Runner {
         };
 
         RetryExecutor retryExecutor = new RetryExecutorBuilder()
-                .withWaitPolicy(fixed(in(1, SECONDS)))
+                .withWaitPolicy(fixed(Duration.in(1, SECONDS)))
                 .withStopPolicy(stopOnAttempt(3))
                 .build();
 

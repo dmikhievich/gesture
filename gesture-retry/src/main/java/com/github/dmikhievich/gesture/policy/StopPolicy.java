@@ -1,6 +1,6 @@
-package com.gestureframework.retry.policy;
+package com.github.dmikhievich.gesture.policy;
 
-import com.gestureframework.retry.RetryContext;
+import com.github.dmikhievich.gesture.RetryContext;
 
 import javax.annotation.Nonnull;
 

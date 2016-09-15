@@ -1,4 +1,4 @@
-package com.gestureframework.retry;
+package com.github.dmikhievich.gesture;
 
 import com.google.common.base.Stopwatch;
 import lombok.*;

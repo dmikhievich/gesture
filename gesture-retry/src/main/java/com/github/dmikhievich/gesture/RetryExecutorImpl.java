@@ -1,8 +1,9 @@
-package com.gestureframework.retry;
+package com.github.dmikhievich.gesture;
 
-import com.gestureframework.retry.condition.Condition;
-import com.gestureframework.retry.policy.StopPolicy;
-import com.gestureframework.retry.policy.WaitPolicy;
+import com.github.dmikhievich.gesture.condition.Condition;
+import com.github.dmikhievich.gesture.exception.RetryExecutionException;
+import com.github.dmikhievich.gesture.policy.StopPolicy;
+import com.github.dmikhievich.gesture.policy.WaitPolicy;
 import com.google.common.util.concurrent.Uninterruptibles;
 
 import java.util.concurrent.Callable;
@@ -30,6 +31,7 @@ public class RetryExecutorImpl implements RetryExecutor {
             if(acceptanceCriteria.matches(attemptResult)) {
                 return attemptResult.getResult();
             }
+            System.out.println("Result "+ attemptResult +" doesn't match criteria [" + acceptanceCriteria.getDescription() + "]. Continue...");
             //update context
             context.incrementRetriesCount();
             context.setLatestAttemptResult(attemptResult);

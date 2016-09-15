@@ -1,7 +1,7 @@
-package com.gestureframework.retry;
+package com.github.dmikhievich.gesture;
 
-import com.gestureframework.retry.policy.StopPolicy;
-import com.gestureframework.retry.policy.WaitPolicy;
+import com.github.dmikhievich.gesture.policy.StopPolicy;
+import com.github.dmikhievich.gesture.policy.WaitPolicy;
 
 /**
  * Created by Dzmitry_Mikhievich.

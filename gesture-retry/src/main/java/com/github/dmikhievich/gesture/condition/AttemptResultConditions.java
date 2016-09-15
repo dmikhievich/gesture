@@ -1,6 +1,6 @@
-package com.gestureframework.retry.condition;
+package com.github.dmikhievich.gesture.condition;
 
-import com.gestureframework.retry.AttemptResult;
+import com.github.dmikhievich.gesture.AttemptResult;
 
 import javax.annotation.Nullable;
 

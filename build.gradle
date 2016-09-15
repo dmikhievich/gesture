@@ -1,7 +1,6 @@
 group 'com.gestureframework'
 version '0.0.1-SNAPSHOT'
 
-
 subprojects {
 
     apply plugin: 'java'
@@ -32,7 +31,9 @@ subprojects {
     tasks.withType(Test) {
         maxParallelForks = 4
     }
-
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xlint:deprecation"
+    }
     check.dependsOn jacocoTestReport
 }
 

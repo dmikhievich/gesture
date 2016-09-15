@@ -1,5 +1,6 @@
-package com.gestureframework.retry;
+package com.github.dmikhievich.gesture;
 
+import com.google.common.annotations.VisibleForTesting;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -38,7 +39,8 @@ public class Duration {
         return new Duration(value, timeUnit);
     }
 
-    private long toNanos() {
+    @VisibleForTesting
+    protected long toNanos() {
         if (valueInNanos == null) {
             valueInNanos = timeUnit.toNanos(value);
         }

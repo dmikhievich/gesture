@@ -1,6 +1,7 @@
-package com.gestureframework.retry;
+package com.github.dmikhievich.gesture;
 
-import com.gestureframework.retry.condition.Condition;
+import com.github.dmikhievich.gesture.condition.Condition;
+import com.github.dmikhievich.gesture.exception.RetryExecutionException;
 
 import java.util.concurrent.Callable;
 
