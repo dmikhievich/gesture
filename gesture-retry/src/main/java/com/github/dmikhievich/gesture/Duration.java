@@ -14,7 +14,7 @@ import static com.google.common.base.Preconditions.checkArgument;
  * Created by Dzmitry_Mikhievich.
  */
 @ToString
-public class Duration {
+public final class Duration {
 
     @Getter
     private final TimeUnit timeUnit;
