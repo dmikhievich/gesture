@@ -34,7 +34,7 @@ public class DurationTest {
     }
 
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testIn_whenCalledWithValidValueAndTimeUnit_thenValidDurationShouldBeReturned() {
         TimeUnit timeUnit = TimeUnit.HOURS;
         long value = 12L;
