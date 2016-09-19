@@ -40,7 +40,7 @@ public class Duration {
     }
 
     @VisibleForTesting
-    protected long toNanos() {
+    long toNanos() {
         if (valueInNanos == null) {
             valueInNanos = timeUnit.toNanos(value);
         }

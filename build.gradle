@@ -1,4 +1,4 @@
-group 'com.gestureframework'
+group 'com.github.dmikhievich'
 version '0.0.1-SNAPSHOT'
 
 subprojects {

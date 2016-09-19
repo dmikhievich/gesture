@@ -29,8 +29,9 @@ public class RetryContext {
         return Duration.in(stopwatch.elapsed(timeUnit), timeUnit);
     }
 
-    void incrementRetriesCount() {
+    RetryContext incrementRetriesCount() {
         retriesCount += 1;
+        return this;
     }
 
     static RetryContext create() {
