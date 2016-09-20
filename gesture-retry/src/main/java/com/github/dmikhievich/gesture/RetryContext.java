@@ -34,7 +34,7 @@ public class RetryContext {
         return this;
     }
 
-    static RetryContext create() {
+    public static RetryContext create() {
         return new RetryContext();
     }
 }

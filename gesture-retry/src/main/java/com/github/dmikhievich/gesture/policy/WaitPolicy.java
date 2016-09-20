@@ -11,5 +11,5 @@ import javax.annotation.Nonnull;
 public interface WaitPolicy {
 
     @Nonnull
-    Duration getDelayBeforeNextAttempt(RetryContext context);
+    Duration getDelayBeforeNextAttempt(@Nonnull RetryContext context);
 }
