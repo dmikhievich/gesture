@@ -6,7 +6,7 @@ import com.github.dmikhievich.gesture.policy.WaitPolicy;
 /**
  * Created by Dzmitry_Mikhievich.
  */
-public class RetryExecutorBuilder {
+public final class RetryExecutorBuilder {
 
     private WaitPolicy waitPolicy;
     private StopPolicy stopPolicy;

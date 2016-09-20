@@ -8,6 +8,8 @@ import junitparams.naming.TestCaseName;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.concurrent.TimeUnit;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -18,12 +20,10 @@ import static org.mockito.Mockito.when;
 @RunWith(JUnitParamsRunner.class)
 public class StopPoliciesTest {
 
-
     @Test
     public void testStopOnTimeout_whenCalledForNonNullDuration_andRetryDurationIsEqualToOrMoreThanValueSpecified_theExecutionShouldBeStopped() {
-        Duration timeoutMock = mock(Duration.class);
-        Duration executionTimeMock = mock(Duration.class);
-        when(executionTimeMock.isMoreOrEquals(timeoutMock)).thenReturn(true);
+        Duration timeoutMock = Duration.in(1, TimeUnit.SECONDS);
+        Duration executionTimeMock = Duration.in(2, TimeUnit.SECONDS);
         RetryContext retryContextMock = mock(RetryContext.class);
         when(retryContextMock.getExecutionDuration()).thenReturn(executionTimeMock);
 
@@ -33,13 +33,12 @@ public class StopPoliciesTest {
 
     @Test
     public void testStopOnTimeout_whenCalledForNonNullDuration_andRetryDurationIsLessThanValueSpecified_theExecutionShouldNotBeStopped() {
-        Duration timeoutMock = mock(Duration.class);
-        Duration executionTimeMock = mock(Duration.class);
-        when(executionTimeMock.isMoreOrEquals(timeoutMock)).thenReturn(false);
+        Duration timeout = Duration.in(2, TimeUnit.SECONDS);
+        Duration executionTime = Duration.in(1, TimeUnit.SECONDS);
         RetryContext retryContextMock = mock(RetryContext.class);
-        when(retryContextMock.getExecutionDuration()).thenReturn(executionTimeMock);
+        when(retryContextMock.getExecutionDuration()).thenReturn(executionTime);
 
-        StopPolicy stopPolicy = StopPolicies.stopOnTimeout(timeoutMock);
+        StopPolicy stopPolicy = StopPolicies.stopOnTimeout(timeout);
         assertFalse(stopPolicy.shouldStopExecution(retryContextMock));
     }
 

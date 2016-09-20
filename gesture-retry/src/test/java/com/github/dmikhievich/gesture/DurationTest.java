@@ -4,21 +4,17 @@ import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
 import nl.jqno.equalsverifier.EqualsVerifier;
-import nl.jqno.equalsverifier.Warning;
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.concurrent.TimeUnit;
 
-import static nl.jqno.equalsverifier.Warning.ALL_FIELDS_SHOULD_BE_USED;
-import static nl.jqno.equalsverifier.Warning.NONFINAL_FIELDS;
-import static nl.jqno.equalsverifier.Warning.NULL_FIELDS;
+import static nl.jqno.equalsverifier.Warning.*;
 import static org.apache.commons.lang3.reflect.FieldUtils.readDeclaredField;
 import static org.apache.commons.lang3.reflect.FieldUtils.writeDeclaredField;
 import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+
 
 /**
  * @author Dzmitry Mikhievich
@@ -76,11 +72,8 @@ public class DurationTest {
     @Parameters({"1000|1000", "1000|999"})
     @TestCaseName("first: {0} nanos, second: {1} nanos")
     public void testIsMoreOrEquals_whenNanosDurationOfThisIsMoreOrEqualThanAnother_thenTrueShouldBeReturned(long one, long another) {
-        Duration duration = mock(Duration.class);
-        when(duration.toNanos()).thenReturn(one);
-        when(duration.isMoreOrEquals(any())).thenCallRealMethod();
-        Duration anotherDuration = mock(Duration.class);
-        when(anotherDuration.toNanos()).thenReturn(another);
+        Duration duration = Duration.in(one, TimeUnit.NANOSECONDS);
+        Duration anotherDuration = Duration.in(another, TimeUnit.NANOSECONDS);
 
         assertTrue(duration.isMoreOrEquals(anotherDuration));
     }
@@ -88,11 +81,8 @@ public class DurationTest {
     @Test
     public void testIsMoreOrEquals_whenNanosDurationOfThisIsLessThanAnother_thenFalseShouldBeReturned() {
         long bearingValue = 100L;
-        Duration duration = mock(Duration.class);
-        when(duration.toNanos()).thenReturn(bearingValue);
-        when(duration.isMoreOrEquals(any())).thenCallRealMethod();
-        Duration anotherDuration = mock(Duration.class);
-        when(anotherDuration.toNanos()).thenReturn(bearingValue + 1);
+        Duration duration = Duration.in(bearingValue, TimeUnit.NANOSECONDS);
+        Duration anotherDuration = Duration.in(bearingValue + 1, TimeUnit.NANOSECONDS);
 
         assertFalse(duration.isMoreOrEquals(anotherDuration));
     }
