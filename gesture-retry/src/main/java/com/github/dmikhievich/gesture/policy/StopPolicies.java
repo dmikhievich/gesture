@@ -12,6 +12,8 @@ import static com.google.common.base.Preconditions.checkArgument;
  */
 public final class StopPolicies {
 
+    private StopPolicies() {}
+
     public static StopPolicy stopOnTimeout(Duration timeout) {
         checkArgument(timeout != null, "Timeout can't be null");
         return new StopOnTimeoutPolicy(timeout);

@@ -12,8 +12,7 @@ import static java.lang.String.format;
  */
 public final class AttemptResultConditions {
 
-    private AttemptResultConditions() {
-    }
+    private AttemptResultConditions() {}
 
     public static <T> Condition<AttemptResult<T>> exception(Condition<Exception> exceptionCondition) {
         checkArgument(exceptionCondition != null, "Condition can't be null");

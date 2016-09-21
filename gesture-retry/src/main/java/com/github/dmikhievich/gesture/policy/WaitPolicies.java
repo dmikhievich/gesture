@@ -12,7 +12,9 @@ import static com.google.common.base.Preconditions.checkArgument;
 /**
  * Created by Dzmitry_Mikhievich.
  */
-public class WaitPolicies {
+public final class WaitPolicies {
+
+    private WaitPolicies() {}
 
     public static WaitPolicy fixed(Duration delay) {
         checkArgument(delay != null, "Delay shouldn't  be null");
@@ -26,7 +28,7 @@ public class WaitPolicies {
         return new RandomWaitPolicy(timeUnit, fromInclusive, toInclusive);
     }
 
-    private static class FixedWaitPolicy implements WaitPolicy {
+    private static final class FixedWaitPolicy implements WaitPolicy {
 
         private final Duration duration;
 
@@ -40,7 +42,7 @@ public class WaitPolicies {
         }
     }
 
-    private static class RandomWaitPolicy implements WaitPolicy {
+    private static final class RandomWaitPolicy implements WaitPolicy {
 
         private final TimeUnit timeUnit;
         private final long from;

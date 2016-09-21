@@ -13,7 +13,7 @@ import static com.google.common.util.concurrent.Uninterruptibles.sleepUninterrup
 /**
  * @author Dzmitry Mikhievich
  */
-public class RetryExecutorImpl implements RetryExecutor {
+final class RetryExecutorImpl implements RetryExecutor {
 
     private final StopPolicy stopPolicy;
     private final WaitPolicy waitPolicy;
