@@ -4,6 +4,7 @@ import com.github.dmikhievich.gesture.condition.Condition;
 import com.github.dmikhievich.gesture.exception.RetryExecutionException;
 import com.github.dmikhievich.gesture.policy.StopPolicy;
 import com.github.dmikhievich.gesture.policy.WaitPolicy;
+import com.google.common.annotations.VisibleForTesting;
 
 import java.util.concurrent.Callable;
 
@@ -47,7 +48,8 @@ final class RetryExecutorImpl implements RetryExecutor {
         throw new RetryExecutionException("");
     }
 
-    private <T> AttemptResult<T> makeAnAttempt(Callable<T> action) {
+    @VisibleForTesting
+    <T> AttemptResult<T> makeAnAttempt(Callable<T> action) {
         AttemptResult<T> result = new AttemptResult<>();
         try {
             result.setResult(action.call());

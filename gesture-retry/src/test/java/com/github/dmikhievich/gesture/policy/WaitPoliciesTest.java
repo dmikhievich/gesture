@@ -9,8 +9,9 @@ import org.junit.runner.RunWith;
 
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 /**
  * @author Dzmitry Mikhievich
@@ -22,7 +23,7 @@ public class WaitPoliciesTest {
     public void testFixed_whenCalledForValidDelay_thenCorrectPolicyShouldBeReturned() {
         Duration delay = Duration.in(1, TimeUnit.HOURS);
         WaitPolicy waitPolicy = WaitPolicies.fixed(delay);
-        assertEquals(delay, waitPolicy.getDelayBeforeNextAttempt(RetryContext.create()));
+        assertThat(delay, equalTo(waitPolicy.getDelayBeforeNextAttempt(RetryContext.create())));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -37,8 +38,8 @@ public class WaitPoliciesTest {
         WaitPolicy policy = WaitPolicies.randomInRange(timeUnit, range.lowerEndpoint(), range.upperEndpoint());
         Duration delay = policy.getDelayBeforeNextAttempt(RetryContext.create());
 
-        assertEquals(timeUnit, delay.getTimeUnit());
-        assertTrue(range.contains(delay.getValue()));
+        assertThat(timeUnit, equalTo(delay.getTimeUnit()));
+        assertThat(range.contains(delay.getValue()), is(true));
     }
 
     @Test(expected = IllegalArgumentException.class)

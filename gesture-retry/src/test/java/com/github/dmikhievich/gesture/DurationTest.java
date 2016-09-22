@@ -4,7 +4,6 @@ import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
 import nl.jqno.equalsverifier.EqualsVerifier;
-import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -13,7 +12,9 @@ import java.util.concurrent.TimeUnit;
 import static nl.jqno.equalsverifier.Warning.*;
 import static org.apache.commons.lang3.reflect.FieldUtils.readDeclaredField;
 import static org.apache.commons.lang3.reflect.FieldUtils.writeDeclaredField;
-import static org.junit.Assert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 
 
 /**
@@ -40,8 +41,8 @@ public class DurationTest {
         TimeUnit timeUnit = TimeUnit.HOURS;
         long value = 12L;
         Duration duration = Duration.in(value, timeUnit);
-        assertEquals(duration.getTimeUnit(), timeUnit);
-        assertEquals(duration.getValue(), value);
+        assertThat(duration.getTimeUnit(), equalTo(timeUnit));
+        assertThat(duration.getValue(), equalTo(value));
     }
 
     @Test
@@ -49,15 +50,15 @@ public class DurationTest {
         TimeUnit timeUnit = TimeUnit.MILLISECONDS;
         long value = 12L;
         long expectedNanos = 12000000L;
-        assertEquals(Duration.in(value, timeUnit).toNanos(), expectedNanos);
+        assertThat(Duration.in(value, timeUnit).toNanos(), equalTo(expectedNanos));
     }
 
     @Test
     public void testToNanos_whenCalledFirstTime_thenValueShouldBeCached() throws IllegalAccessException {
         Duration duration = Duration.in(1, TimeUnit.SECONDS);
         long expectedNanos = 1000000000L;
-        assertEquals(expectedNanos, duration.toNanos());
-        assertEquals(readDeclaredField(duration, "valueInNanos", true), expectedNanos);
+        assertThat(expectedNanos, equalTo(duration.toNanos()));
+        assertThat(readDeclaredField(duration, "valueInNanos", true), equalTo(expectedNanos));
     }
 
     @Test
@@ -65,7 +66,8 @@ public class DurationTest {
         Duration duration = Duration.in(1, TimeUnit.SECONDS);
         long cachedDurationInNanos = 100L;
         writeDeclaredField(duration, "valueInNanos", cachedDurationInNanos, true);
-        assertEquals(cachedDurationInNanos, duration.toNanos());
+
+        assertThat(cachedDurationInNanos, equalTo(duration.toNanos()));
     }
 
     @Test
@@ -75,7 +77,7 @@ public class DurationTest {
         Duration duration = Duration.in(one, TimeUnit.NANOSECONDS);
         Duration anotherDuration = Duration.in(another, TimeUnit.NANOSECONDS);
 
-        assertTrue(duration.isMoreOrEquals(anotherDuration));
+        assertThat(duration.isMoreOrEquals(anotherDuration), is(true));
     }
 
     @Test
@@ -84,7 +86,7 @@ public class DurationTest {
         Duration duration = Duration.in(bearingValue, TimeUnit.NANOSECONDS);
         Duration anotherDuration = Duration.in(bearingValue + 1, TimeUnit.NANOSECONDS);
 
-        assertFalse(duration.isMoreOrEquals(anotherDuration));
+        assertThat(duration.isMoreOrEquals(anotherDuration), is(false));
     }
 
     @Test

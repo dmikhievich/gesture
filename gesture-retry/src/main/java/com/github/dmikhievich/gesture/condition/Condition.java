@@ -15,7 +15,7 @@ public interface Condition<T> {
 
     default Condition<T> and(Condition<T> other) {
         checkArgument(other != null, "Linkable condition can't be null");
-        String description = String.format("(%s and %s)", getDescription(), other.getDescription());
+        String description = String.format("(%s) and (%s)", getDescription(), other.getDescription());
         return new Condition<T>() {
             @Override
             public boolean matches(@Nullable T value) {
@@ -31,7 +31,7 @@ public interface Condition<T> {
 
     default Condition<T> or(Condition<T> other) {
         checkArgument(other != null, "Linkable condition can't be null");
-        String description = String.format("(%s or %s)", getDescription(), other.getDescription());
+        String description = String.format("(%s) or (%s)", getDescription(), other.getDescription());
         return new Condition<T>() {
             @Override
             public boolean matches(@Nullable T value) {

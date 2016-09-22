@@ -11,8 +11,7 @@ import static com.google.common.base.Preconditions.checkArgument;
  */
 public final class ExceptionConditions {
 
-    private ExceptionConditions() {
-    }
+    private ExceptionConditions() {}
 
     public static Condition<Exception> isThrown() {
         return ExceptionIsThrownCondition.getInstance();

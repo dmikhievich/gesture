@@ -6,8 +6,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -46,7 +47,7 @@ public class ConditionTest {
 
         Condition<Object> aggregatedCondition = testCondition.and(otherCondition);
         boolean expectedResult = baseCondResult && otherCondResult;
-        assertTrue(aggregatedCondition.matches(argMock) == expectedResult);
+        assertThat(aggregatedCondition.matches(argMock), equalTo(expectedResult));
     }
 
 
@@ -68,7 +69,7 @@ public class ConditionTest {
 
         Condition<Object> aggregatedCondition = testCondition.or(otherCondition);
         boolean expectedResult = baseCondResult || otherCondResult;
-        assertTrue(aggregatedCondition.matches(argMock) == expectedResult);
+        assertThat(aggregatedCondition.matches(argMock), equalTo(expectedResult));
     }
 
     @Test
@@ -77,7 +78,7 @@ public class ConditionTest {
         when(testCondition.matches(argMock)).thenReturn(result);
 
         Condition<Object> aggregatedCondition = Condition.not(testCondition);
-        assertTrue(aggregatedCondition.matches(argMock) == !result);
+        assertThat(aggregatedCondition.matches(argMock), equalTo(!result));
     }
 
     @Test(expected = IllegalArgumentException.class)

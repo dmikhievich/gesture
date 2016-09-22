@@ -10,7 +10,9 @@ import org.junit.runner.RunWith;
 
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -28,7 +30,7 @@ public class StopPoliciesTest {
         when(retryContextMock.getExecutionDuration()).thenReturn(executionTimeMock);
 
         StopPolicy stopPolicy = StopPolicies.stopOnTimeout(timeoutMock);
-        assertTrue(stopPolicy.shouldStopExecution(retryContextMock));
+        assertThat(stopPolicy.shouldStopExecution(retryContextMock), is(true));
     }
 
     @Test
@@ -39,7 +41,7 @@ public class StopPoliciesTest {
         when(retryContextMock.getExecutionDuration()).thenReturn(executionTime);
 
         StopPolicy stopPolicy = StopPolicies.stopOnTimeout(timeout);
-        assertFalse(stopPolicy.shouldStopExecution(retryContextMock));
+        assertThat(stopPolicy.shouldStopExecution(retryContextMock), is(false));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -57,7 +59,7 @@ public class StopPoliciesTest {
         when(retryContextMock.getRetriesCount()).thenReturn(currentAttempt);
 
         StopPolicy stopPolicy = StopPolicies.stopOnAttempt(targetAttempt);
-        assertEquals(expectedResult, stopPolicy.shouldStopExecution(retryContextMock));
+        assertThat(expectedResult, equalTo(stopPolicy.shouldStopExecution(retryContextMock)));
     }
 
     @Parameters({"0", "-1", "-14566"})
