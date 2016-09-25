@@ -36,7 +36,8 @@ public final class WaitPolicies {
             this.duration = duration;
         }
 
-        @Nonnull @Override
+        @Nonnull
+        @Override
         public Duration getDelayBeforeNextAttempt(@Nonnull RetryContext context) {
             return duration;
         }
@@ -54,7 +55,8 @@ public final class WaitPolicies {
             this.to = to;
         }
 
-        @Nonnull @Override
+        @Nonnull
+        @Override
         public Duration getDelayBeforeNextAttempt(@Nonnull RetryContext context) {
             long duration = RandomUtils.nextLong(from, to + 1);
             return Duration.in(duration, timeUnit);

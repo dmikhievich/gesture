@@ -4,15 +4,16 @@ import com.github.dmikhievich.gesture.AttemptResult;
 
 import javax.annotation.Nullable;
 
+import static com.github.dmikhievich.gesture.util.ConditionUtils.buildCompositeDescription;
 import static com.google.common.base.Preconditions.checkArgument;
-import static java.lang.String.format;
 
 /**
  * @author Dzmitry Mikhievich
  */
 public final class AttemptResultConditions {
 
-    private AttemptResultConditions() {}
+    private AttemptResultConditions() {
+    }
 
     public static <T> Condition<AttemptResult<T>> exception(Condition<Exception> exceptionCondition) {
         checkArgument(exceptionCondition != null, "Condition can't be null");
@@ -26,7 +27,7 @@ public final class AttemptResultConditions {
 
             @Override
             public String getDescription() {
-                return format("exception is (%s)", exceptionCondition.getDescription());
+                return buildCompositeDescription(null, "exception is", exceptionCondition);
             }
         };
     }
@@ -43,7 +44,7 @@ public final class AttemptResultConditions {
 
             @Override
             public String getDescription() {
-                return format("result is (%s)", resultCondition.getDescription());
+                return buildCompositeDescription(null, "result is", resultCondition);
             }
         };
     }

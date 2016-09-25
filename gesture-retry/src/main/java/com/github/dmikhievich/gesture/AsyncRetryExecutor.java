@@ -2,7 +2,6 @@ package com.github.dmikhievich.gesture;
 
 import com.github.dmikhievich.gesture.condition.Condition;
 import com.github.dmikhievich.gesture.exception.RetryExecutionException;
-import com.google.common.base.Preconditions;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;

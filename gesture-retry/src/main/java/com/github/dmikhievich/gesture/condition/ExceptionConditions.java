@@ -41,7 +41,7 @@ public final class ExceptionConditions {
 
         @Override
         public boolean matches(@Nullable Exception value) {
-             return exceptionType.isInstance(value);
+            return exceptionType.isInstance(value);
         }
 
         @Override
@@ -87,7 +87,7 @@ public final class ExceptionConditions {
         @Override
         public boolean matches(@Nullable Exception value) {
             return value != null && exceptionType.isAssignableFrom(value.getClass());
-          }
+        }
 
         @Override
         public String getDescription() {

@@ -10,5 +10,15 @@ import java.util.concurrent.Callable;
  */
 interface RetryExecutor {
 
-    <T> T doWithRetry(Callable<T> action, Condition<AttemptResult<T>> acceptanceCriteria) throws RetryExecutionException;
+    /**
+     * Execute specified action till the acceptance criteria isn't met or execution isn't stopped
+     *
+     * @param action             action to retry
+     * @param acceptanceCriteria
+     * @param <T>
+     * @return latest action result
+     * @throws RetryExecutionException  acceptance criteria isn't met and execution process is finished
+     * @throws IllegalArgumentException if action or acceptanceCriteria is null
+     */
+    <T> T doWithRetry(Callable<T> action, Condition<AttemptResult<T>> acceptanceCriteria) throws RetryExecutionException, IllegalArgumentException;
 }

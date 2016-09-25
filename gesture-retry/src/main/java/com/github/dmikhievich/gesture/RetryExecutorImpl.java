@@ -28,6 +28,9 @@ final class RetryExecutorImpl implements RetryExecutor {
 
     @Override
     public <T> T doWithRetry(Callable<T> action, Condition<AttemptResult<T>> acceptanceCriteria) throws RetryExecutionException {
+        checkArgument(action != null, "Action shouldn't be null");
+        checkArgument(acceptanceCriteria != null, "Acceptance criteria shouldn't be null");
+
         RetryContext context = RetryContext.create();
         boolean continueExecution = true;
         while (continueExecution) {
