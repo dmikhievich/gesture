@@ -47,7 +47,7 @@ public final class ExceptionConditions {
         @Override
         public String getDescription() {
             String type = exceptionType.getSimpleName();
-            return String.format("instance of [%s]", type);
+            return String.format("instance of %s", type);
         }
     }
 
@@ -92,7 +92,7 @@ public final class ExceptionConditions {
         @Override
         public String getDescription() {
             String type = exceptionType.getSimpleName();
-            return String.format("assignable of [%s]", type);
+            return String.format("assignable from %s", type);
         }
     }
 }

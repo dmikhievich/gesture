@@ -2,6 +2,7 @@ package com.github.dmikhievich.gesture.condition;
 
 import javax.annotation.Nullable;
 
+import static com.github.dmikhievich.gesture.util.ConditionUtils.buildCompositeDescription;
 import static com.google.common.base.Preconditions.checkArgument;
 
 /**
@@ -13,9 +14,13 @@ public interface Condition<T> {
 
     String getDescription();
 
+    default boolean isComposite() {
+        return false;
+    }
+
     default Condition<T> and(Condition<T> other) {
         checkArgument(other != null, "Linkable condition can't be null");
-        String description = String.format("(%s) and (%s)", getDescription(), other.getDescription());
+        String description = buildCompositeDescription(this, "and", other);
         return new Condition<T>() {
             @Override
             public boolean matches(@Nullable T value) {
@@ -26,12 +31,17 @@ public interface Condition<T> {
             public String getDescription() {
                 return description;
             }
+
+            @Override
+            public boolean isComposite() {
+                return true;
+            }
         };
     }
 
     default Condition<T> or(Condition<T> other) {
         checkArgument(other != null, "Linkable condition can't be null");
-        String description = String.format("(%s) or (%s)", getDescription(), other.getDescription());
+        String description = buildCompositeDescription(this, "or", other);
         return new Condition<T>() {
             @Override
             public boolean matches(@Nullable T value) {
@@ -41,6 +51,11 @@ public interface Condition<T> {
             @Override
             public String getDescription() {
                 return description;
+            }
+
+            @Override
+            public boolean isComposite() {
+                return true;
             }
         };
     }
@@ -56,8 +71,9 @@ public interface Condition<T> {
 
             @Override
             public String getDescription() {
-                return String.format("not (%s)", condition.getDescription());
+                return buildCompositeDescription(null, "not", condition);
             }
         };
     }
+
 }
