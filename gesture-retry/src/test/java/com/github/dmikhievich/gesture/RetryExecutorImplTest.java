@@ -6,9 +6,7 @@ import org.junit.Test;
 
 import java.util.concurrent.Callable;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -16,7 +14,7 @@ import static org.mockito.Mockito.when;
 /**
  * @author Dzmitry Mikhievich
  */
-public class RetryExecutorImplTest {
+public class RetryExecutorImplTest extends RetryExecutorTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testConstructor_stopPolicyIsNull() {
@@ -52,5 +50,10 @@ public class RetryExecutorImplTest {
         AttemptResult result = retryExecutor.makeAnAttempt(actionMock);
         assertThat(result.getResult(), equalTo(actionResult));
         assertThat(result.getThrownException(), nullValue());
+    }
+
+    @Override
+    protected RetryExecutor getExecutorInstance() {
+        return new RetryExecutorImpl(mock(StopPolicy.class), mock(WaitPolicy.class));
     }
 }
